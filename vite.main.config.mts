@@ -6,6 +6,11 @@ const nodeBuiltins = builtinModules.flatMap((name) => [name, `node:${name}`]);
 
 // https://vitejs.dev/config
 export default defineConfig({
+  server: {
+    watch: {
+      ignored: ["**/userData/**", "**/out/**", "**/.git/**"],
+    },
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

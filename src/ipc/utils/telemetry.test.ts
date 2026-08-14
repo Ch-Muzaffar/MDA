@@ -78,15 +78,12 @@ describe("shouldFilterTelemetryException", () => {
 });
 
 describe("sendTelemetryEventToWindow", () => {
-  it("sends through the selected product window", () => {
+  it("safely no-ops in air-gapped local mode", () => {
     const send = vi.fn();
     const target = { webContents: { send } } as unknown as BrowserWindow;
 
     sendTelemetryEventToWindow(target, "app:crash_detected", { error: true });
 
-    expect(send).toHaveBeenCalledWith("telemetry:event", {
-      eventName: "app:crash_detected",
-      properties: { error: true },
-    });
+    expect(send).not.toHaveBeenCalled();
   });
 });

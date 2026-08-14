@@ -45,8 +45,7 @@ export function DefaultChatModeSelector() {
     envVars,
     freeAgentQuotaAvailable,
   );
-  const showBasicAgentOption =
-    isProEnabled || freeAgentQuotaAvailable !== false;
+  const showBasicAgentOption = true;
 
   const handleDefaultChatModeChange = (value: ChatMode) => {
     if (isFreeProBuildModeCombination(settings.selectedModel, value)) {

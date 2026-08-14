@@ -12,6 +12,7 @@ dist/
 # playwright
 playwright-report/
 test-results/
+test-results.txt
 blob-report/
 flakiness-report/
 

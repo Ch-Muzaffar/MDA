@@ -177,7 +177,7 @@ vi.mock("@/hooks/useLanguageModelsByProviders", () => ({
         },
         {
           apiName: "free-pro",
-          displayName: "Dyad Free",
+          displayName: "MDA AI Free",
           description: "Free Pro model",
           type: "cloud",
           tag: "Free",
@@ -402,12 +402,12 @@ describe("ModelPicker", () => {
     expect(screen.queryByText("GLM 4.7")).toBeNull();
     expect(screen.queryByText("Kimi K2")).toBeNull();
     expect(screen.queryByText("Free (OpenRouter)")).toBeNull();
-    expect(screen.getByText("Dyad Free")).toBeTruthy();
+    expect(screen.getByText("MDA AI Free")).toBeTruthy();
     expect(screen.getByText("2/5 left")).toBeTruthy();
     expect(screen.getByText("Data sharing")).toBeTruthy();
     expect(
       screen
-        .getByText("Dyad Free")
+        .getByText("MDA AI Free")
         .closest("button")
         ?.getAttribute("aria-label"),
     ).toContain("2/5 left. Data sharing");
@@ -530,7 +530,7 @@ describe("ModelPicker", () => {
     expect(screen.getByText("More models")).toBeTruthy();
     expect(screen.queryByText("Other AI providers")).toBeNull();
     expect(screen.queryByText("Grok Code Fast")).toBeNull();
-    expect(screen.queryByText("Dyad Free")).toBeNull();
+    expect(screen.queryByText("MDA AI Free")).toBeNull();
     expect(screen.getByText("Free (OpenRouter)")).toBeTruthy();
   });
 
@@ -782,12 +782,12 @@ describe("ModelPicker", () => {
     });
   });
 
-  it("hides Dyad Free for Dyad Pro trial users", () => {
+  it("hides MDA AI Free for Dyad Pro trial users", () => {
     mocks.isTrial = true;
 
     render(<ModelPicker />);
 
-    expect(screen.queryByText("Dyad Free")).toBeNull();
+    expect(screen.queryByText("MDA AI Free")).toBeNull();
     expect(
       screen.getByText("Upgrade from Dyad Pro trial to unlock more models."),
     ).toBeTruthy();
@@ -798,7 +798,7 @@ describe("ModelPicker", () => {
     ).toBe("Medium");
   });
 
-  it("does not select Dyad Free when quota is exhausted", () => {
+  it("does not select MDA AI Free when quota is exhausted", () => {
     mocks.freeModelQuota.isQuotaExceeded = true;
     mocks.freeModelQuota.messagesRemaining = 0;
     mocks.freeModelQuota.quotaStatus = {
@@ -811,15 +811,15 @@ describe("ModelPicker", () => {
 
     render(<ModelPicker />);
 
-    fireEvent.click(screen.getByText("Dyad Free").closest("button")!);
+    fireEvent.click(screen.getByText("MDA AI Free").closest("button")!);
 
     expect(mocks.updateSettings).not.toHaveBeenCalled();
   });
 
-  it("moves Build mode to Agent when selecting Dyad Free", async () => {
+  it("moves Build mode to Agent when selecting MDA AI Free", async () => {
     render(<ModelPicker />);
 
-    fireEvent.click(screen.getByText("Dyad Free").closest("button")!);
+    fireEvent.click(screen.getByText("MDA AI Free").closest("button")!);
 
     await waitFor(() => {
       expect(mocks.updateSettings).toHaveBeenCalledWith({
@@ -847,7 +847,7 @@ describe("ModelPicker", () => {
     };
 
     render(<ModelPicker />);
-    fireEvent.click(screen.getByText("Dyad Free").closest("button")!);
+    fireEvent.click(screen.getByText("MDA AI Free").closest("button")!);
 
     await waitFor(() => {
       expect(mocks.setChatSelection).toHaveBeenCalledWith({
@@ -862,7 +862,7 @@ describe("ModelPicker", () => {
     expect(mocks.setChatModelSelection).not.toHaveBeenCalled();
   });
 
-  it("shows Dyad Free quota as unavailable when the quota fetch fails", () => {
+  it("shows MDA AI Free quota as unavailable when the quota fetch fails", () => {
     mocks.freeModelQuota.error = new Error("quota unavailable");
     mocks.freeModelQuota.quotaStatus = null;
 

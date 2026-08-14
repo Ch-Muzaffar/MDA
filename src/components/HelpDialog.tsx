@@ -36,6 +36,7 @@ import { showError } from "@/lib/toast";
 import { useTranslation } from "react-i18next";
 import { HelpBotDialog } from "./HelpBotDialog";
 import { BugScreenshotDialog } from "./BugScreenshotDialog";
+import { useSettings } from "@/hooks/useSettings";
 import { type ModelSelection, type UserSettings } from "@/lib/schemas";
 import { type UserBudgetInfo } from "@/ipc/types/system";
 import { motion, AnimatePresence } from "framer-motion";
@@ -476,7 +477,7 @@ ${formatLogsSection(debugInfo)}
 
 Session ID: ${sessionId}
 Session Schema: v2.0
-Pro User ID: ${userBudget?.redactedUserId || "n/a"}
+Pro User ID: n/a
 
 ## Issue Description (required)
 <!-- Please describe the issue you're experiencing -->
@@ -505,7 +506,7 @@ ${formatLogsSection(debugInfo)}
       openGitHubIssue({
         title: "[session report] <add title>",
         labels: ["support"],
-        body: `Session ID: ${sessionId}\nSession Schema: v2.0\nPro User ID: ${userBudget?.redactedUserId || "n/a"}`,
+        body: `Session ID: ${sessionId}\nSession Schema: v2.0\nPro User ID: n/a`,
         isDyadProUser,
       });
     }

@@ -254,7 +254,7 @@ export function FirstPromptProvider({
             ? await resolveFirstPromptDefaultChatMode({
                 settings: resolvedSettings,
                 envVars: inputs.envVars,
-                quotaStatus: inputs.quotaStatus,
+                quotaStatus: undefined,
                 queryClient,
               })
             : undefined;

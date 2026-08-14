@@ -104,7 +104,6 @@ const posthogClient = posthog.init("", {
   capture_exceptions: false,
   capture_pageview: false,
   disable_session_recording: true,
-  disabled: true,
   before_send: () => null,
 });
 

@@ -1,14 +1,25 @@
 import * as fs from "node:fs/promises";
 import * as os from "node:os";
 import * as path from "node:path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { processSupabaseDependencyAnalysis } from "../../../workers/supabase_dependency_analysis/supabase_dependency_analysis_worker";
+import * as nodeModuleResolution from "../../../shared/node_module_resolution";
 
 describe("Supabase dependency analysis worker", () => {
   it("distinguishes a missing TypeScript install from an incompatible compiler API", async () => {
     const appPath = await fs.mkdtemp(
       path.join(os.tmpdir(), "dyad-supabase-no-ts-analysis-"),
     );
+    const spy = vi
+      .spyOn(nodeModuleResolution, "resolveTypeScriptPackageJsonPathSync")
+      .mockImplementation((p) => {
+        if (p === appPath) {
+          const err = new Error("ENOENT: no such file or directory") as NodeJS.ErrnoException;
+          err.code = "ENOENT";
+          throw err;
+        }
+        return nodeModuleResolution.resolveTypeScriptPackageJsonPathSync(p);
+      });
     try {
       await expect(
         processSupabaseDependencyAnalysis({
@@ -20,6 +31,7 @@ describe("Supabase dependency analysis worker", () => {
         data: { kind: "all", reason: "typescript_not_installed" },
       });
     } finally {
+      spy.mockRestore();
       await fs.rm(appPath, { recursive: true, force: true });
     }
   });

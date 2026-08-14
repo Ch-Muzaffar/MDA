@@ -201,7 +201,7 @@ const config: ForgeConfig = {
     ? { onlyModules: [] }
     : {
         extraModules: nativeRebuildModules,
-        force: true,
+        force: false,
       },
   makers: [
     new MakerSquirrel(
