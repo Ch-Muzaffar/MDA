@@ -158,10 +158,6 @@ vi.mock("@/hooks/useTrialModelRestriction", () => ({
   }),
 }));
 
-vi.mock("@/hooks/useFreeModelQuota", () => ({
-  useFreeModelQuota: () => mocks.freeModelQuota,
-}));
-
 vi.mock("@/hooks/useLanguageModelsByProviders", () => ({
   useLanguageModelsByProviders: () => ({
     isLoading: false,

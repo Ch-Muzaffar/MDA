@@ -16,7 +16,6 @@ import {
 import { getFreeProCompatibleChatMode } from "@/lib/freeProModel";
 import { queryKeys } from "@/lib/queryKeys";
 import { useSettings } from "./useSettings";
-import { useFreeAgentQuota } from "./useFreeAgentQuota";
 
 type ChatModeMutationContext = {
   previousChat?: Chat;
@@ -33,7 +32,6 @@ const chatListQueryFilter = {
 export function useChatMode(chatId: number | null | undefined) {
   const queryClient = useQueryClient();
   const { settings, envVars, updateSettings } = useSettings();
-  const { isQuotaExceeded, isLoading: isQuotaLoading } = useFreeAgentQuota();
   const hasManuallySelectedChatMode = useAtomValue(
     hasManuallySelectedChatModeAtom,
   );
@@ -45,7 +43,7 @@ export function useChatMode(chatId: number | null | undefined) {
     enabled: activeChatId !== null,
   });
 
-  const freeAgentQuotaAvailable = isQuotaLoading ? undefined : !isQuotaExceeded;
+  const freeAgentQuotaAvailable = true;
   const selectedModel =
     chatQuery.data?.modelSelection ?? settings?.selectedModel;
   const effectiveDefaultMode = settings

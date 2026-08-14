@@ -12,8 +12,6 @@ import {
 import { ipc } from "@/ipc/types";
 import { showError } from "@/lib/toast";
 import { toast } from "sonner";
-import { useUserBudgetInfo } from "@/hooks/useUserBudgetInfo";
-import { AiAccessBanner } from "./ProBanner";
 import type {
   ThemeGenerationMode,
   ThemeGenerationModel,
@@ -72,7 +70,7 @@ export function AIGeneratorTab({
   const generateFromUrlMutation = useGenerateThemeFromUrl();
   const isGenerating =
     generatePromptMutation.isPending || generateFromUrlMutation.isPending;
-  const { userBudget } = useUserBudgetInfo();
+  const userBudget = { budget: 1 };
   const { themeGenerationModelOptions, isLoadingThemeGenerationModelOptions } =
     useThemeGenerationModelOptions();
 

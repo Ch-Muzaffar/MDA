@@ -710,35 +710,13 @@ async function fetchRemoteAllowBuildsSourceFromNetwork(
 }
 
 async function resolveAllowBuildsSource({
-  existingContent,
   allowBuildsText,
-  remoteAllowBuildsTextFetcher,
 }: {
   existingContent: string;
   allowBuildsText?: string;
   remoteAllowBuildsTextFetcher?: AllowBuildsTextFetcher;
 }): Promise<AllowBuildsSource | null> {
-  if (allowBuildsText !== undefined) {
-    return parseDefaultAllowBuilds(allowBuildsText);
-  }
-
-  const remoteSource = await fetchRemoteAllowBuildsSource(
-    remoteAllowBuildsTextFetcher,
-  );
-  if (remoteSource) {
-    return remoteSource;
-  }
-
-  const existingMetadata =
-    getExistingManagedAllowBuildsMetadata(existingContent);
-  if (
-    existingMetadata?.schema === DYAD_ALLOW_BUILDS_SCHEMA &&
-    existingMetadata.channel === "remote"
-  ) {
-    return null;
-  }
-
-  return parseDefaultAllowBuilds(defaultApproveBuildsText);
+  return parseDefaultAllowBuilds(allowBuildsText ?? defaultApproveBuildsText);
 }
 
 export async function ensurePnpmAllowBuildsConfigured({

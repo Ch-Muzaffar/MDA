@@ -1,7 +1,4 @@
 import { ipc } from "@/ipc/types";
-import { useFreeAgentQuota } from "@/hooks/useFreeAgentQuota";
-import { useFreeModelQuota } from "@/hooks/useFreeModelQuota";
-import { useUserBudgetInfo } from "@/hooks/useUserBudgetInfo";
 import { AI_STREAMING_ERROR_MESSAGE_PREFIX } from "@/shared/texts";
 import {
   X,
@@ -37,15 +34,10 @@ export function ChatErrorBox({
     normalizedError.includes("FREE_MODEL_QUOTA_EXCEEDED") ||
     normalizedError.includes("Dyad Free has reached its daily limit.") ||
     normalizedError.includes("Dyad Free limit");
-  const { messagesLimit } = useFreeAgentQuota();
-  const {
-    messagesLimit: freeModelMessagesLimit,
-    resetTime: freeModelResetTime,
-  } = useFreeModelQuota({ enabled: isFreeModelQuotaError });
-  const { userBudget } = useUserBudgetInfo();
-  // Trial Pro users cannot use the Free model (it is hidden from the picker and
-  // rejected by the engine), so don't suggest it to them.
-  const isTrialProUser = userBudget?.isTrial === true;
+  const messagesLimit = 0;
+  const freeModelMessagesLimit = 0;
+  const freeModelResetTime: number | null = null;
+  const isTrialProUser = false;
 
   if (error.includes("doesn't have a free quota tier")) {
     return (

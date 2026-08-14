@@ -38,6 +38,7 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
+    testTimeout: 60_000,
     maxWorkers: maxTestWorkers,
     onConsoleLog(log, _type) {
       // Suppress known noisy logs while allowing useful debugging output

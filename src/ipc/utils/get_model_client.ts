@@ -118,61 +118,7 @@ export async function getModelClient(
     );
   }
 
-  // Handle Dyad Pro override
-  if (isDyadProEnabledForRequest) {
-    const dyadEngineUrl = process.env.DYAD_ENGINE_URL;
-    // Check if the selected provider supports Dyad Pro (has a gateway prefix) OR
-    // we're using local engine.
-    // IMPORTANT: some providers like OpenAI have an empty string gateway prefix,
-    // so we do a nullish and not a truthy check here.
-    if (providerConfig.gatewayPrefix != null || dyadEngineUrl) {
-      const enableSmartFilesContext = settings.enableProSmartFilesContextMode;
-      const provider = createDyadEngine({
-        apiKey: dyadApiKey,
-        baseURL: getDyadEngineBaseUrl(),
-        ...getModelClientFetchOption(),
-        dyadOptions: {
-          enableLazyEdits:
-            settings.selectedChatMode === "ask"
-              ? false
-              : settings.enableProLazyEditsMode &&
-                settings.proLazyEditsMode !== "v2",
-          enableSmartFilesContext,
-          enableWebSearch: settings.enableProWebSearch,
-        },
-        settings,
-        modelSelection,
-      });
 
-      logger.debug(
-        `\x1b[1;97;44m Using Dyad Pro API key for model: ${model.name} \x1b[0m`,
-      );
-
-      logger.debug(
-        `\x1b[1;30;42m Using Dyad Pro engine: ${dyadEngineUrl ?? "<prod>"} \x1b[0m`,
-      );
-
-      // Do not use free variant (for openrouter).
-      const modelName = model.name.split(":free")[0];
-      const proModelClient = await getProModelClient({
-        model,
-        settings,
-        provider,
-        modelId: `${providerConfig.gatewayPrefix || ""}${modelName}`,
-      });
-
-      return {
-        modelClient: proModelClient,
-        isEngineEnabled: true,
-        isSmartContextEnabled: enableSmartFilesContext,
-      };
-    } else {
-      logger.warn(
-        `Dyad Pro enabled, but provider ${model.provider} does not have a gateway prefix defined. Falling back to direct provider connection.`,
-      );
-      // Fall through to regular provider logic if gateway prefix is missing
-    }
-  }
   // Handle 'auto' provider by trying each model in AUTO_MODELS until one works
   if (model.provider === "auto") {
     if (model.name === "free") {

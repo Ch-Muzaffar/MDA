@@ -67,9 +67,6 @@ vi.mock("@/hooks/useSettings", () => ({
     updateSettings: mocks.updateSettings,
   }),
 }));
-vi.mock("@/hooks/useFreeAgentQuota", () => ({
-  useFreeAgentQuota: () => ({ quotaStatus: undefined }),
-}));
 vi.mock("@/lib/schemas", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/schemas")>()),
   getEffectiveDefaultChatMode: () => mocks.effectiveDefaultChatMode,

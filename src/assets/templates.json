@@ -1,0 +1,51 @@
+[
+  {
+    "githubOrg": "cekuu35",
+    "githubRepo": "free-nextjs-cv-template",
+    "title": "Personal Portfolio / CV",
+    "description": "A multi-page Next.js portfolio and CV starter with TypeScript and Tailwind CSS. Customize identity, projects, experience, skills, and posts from one typed config file.",
+    "imageUrl": "https://raw.githubusercontent.com/cekuu35/free-nextjs-cv-template/main/cover.png"
+  },
+  {
+    "githubOrg": "shaaraa",
+    "githubRepo": "dyad-react-native-expo-template",
+    "title": "React Native (Expo) + Web (SDK 53)",
+    "description": "An Expo SDK 53 + expo-router v5 starter that runs on iOS/Android and the browser via react-native-web",
+    "imageUrl": "https://github.com/user-attachments/assets/d6b58360-ef17-4614-8083-6abef1a00877"
+  },
+  {
+    "githubOrg": "stgreenb",
+    "githubRepo": "docker-dyad-template",
+    "title": "Docker / Next.js / Lowdb / GHCR",
+    "description": "This Next.js template provides a Dockerized solution with Lowdb JSON database, built-in CORS proxy, and automated GitHub Actions container builds for simplified deployment.",
+    "imageUrl": "https://github.com/user-attachments/assets/ba9656e3-b9c4-4032-a138-f6d4a83cd84d"
+  },
+  {
+    "githubOrg": "k1lgor",
+    "githubRepo": "dyad-vue-template",
+    "title": "Vue",
+    "description": "A minimal, production-ready Vue 3 starter template with TypeScript, Vite, and Tailwind CSS v3.",
+    "imageUrl": "https://github.com/user-attachments/assets/173a3551-ad10-4778-925f-6e2604570116"
+  },
+  {
+    "githubOrg": "jeff-kazzee",
+    "githubRepo": "dyad-template-angular",
+    "title": "Angular",
+    "description": "Angular template for Dyad",
+    "imageUrl": "https://github.com/user-attachments/assets/9f8a86e9-2625-4cdf-9e47-c3b0d615cf4d"
+  },
+  {
+    "githubOrg": "tonedice",
+    "githubRepo": "dyad-chrome-extension-template",
+    "title": "Chrome Extension Starter",
+    "description": "Create Chrome Extensions in Dyad. Note: Dyad preview does not work but load in browser to test updates.",
+    "imageUrl": "https://github.com/user-attachments/assets/dcf38eff-8772-458f-9ac9-07374c57c25e"
+  },
+  {
+    "githubOrg": "sparkie-dev",
+    "githubRepo": "dyad-react-router-7-fs-routes-template",
+    "title": "React Router 7 + File System Routes",
+    "description": "Modern template using react-router v7 with file based routing from fs-routes and prismaORM for database management. Uses tailwind css, and shadcn/ui",
+    "imageUrl": "https://github.com/user-attachments/assets/6715b328-540f-4bd0-96fa-a0a78e73497c"
+  }
+]

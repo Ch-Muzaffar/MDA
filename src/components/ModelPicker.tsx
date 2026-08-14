@@ -46,7 +46,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { providerSettingsRoute } from "@/routes/settings/providers/$provider";
-import { useFreeModelQuota } from "@/hooks/useFreeModelQuota";
 import {
   FREE_PRO_MODEL_FALLBACK_CHAT_MODE,
   FREE_PRO_MODEL_NAME,
@@ -124,7 +123,15 @@ export function ModelPicker() {
   const navigate = useNavigate();
   const posthog = usePostHog();
   const { isTrial, isLoadingTrialStatus } = useTrialModelRestriction();
-  const freeModelQuota = useFreeModelQuota();
+  const freeModelQuota = {
+    isQuotaExceeded: false,
+    isLoading: false,
+    resetTime: null,
+    messagesRemaining: 0,
+    messagesLimit: 0,
+    error: null,
+    quotaStatus: null,
+  };
   const hasEstablishedChat = Boolean(
     chat && (chat.modelSelection || chat.messages.length > 0),
   );

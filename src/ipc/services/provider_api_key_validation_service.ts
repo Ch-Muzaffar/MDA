@@ -131,29 +131,10 @@ async function createValidationModel(
       return openrouter("openrouter/free");
     }
     case "auto": {
-      const settings = await readEffectiveSettings();
-      const dyad = createDyadEngine({
-        apiKey,
-        baseURL: getDyadEngineBaseUrl(),
-        ...getTestFetchOption(),
-        dyadOptions: {
-          enableLazyEdits: false,
-          enableSmartFilesContext: false,
-          enableWebSearch: false,
-        },
-        settings: {
-          ...settings,
-          enableDyadPro: true,
-          providerSettings: {
-            ...settings.providerSettings,
-            auto: {
-              ...settings.providerSettings?.auto,
-              apiKey: { value: apiKey },
-            },
-          },
-        } satisfies UserSettings,
-      });
-      return dyad("dyad/auto", { providerId: "openai" });
+      throw new DyadError(
+        "Dyad Pro auto provider is disabled in local BYOK mode.",
+        DyadErrorKind.Validation,
+      );
     }
   }
 }

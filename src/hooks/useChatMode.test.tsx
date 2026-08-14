@@ -26,13 +26,6 @@ vi.mock("./useSettings", () => ({
   }),
 }));
 
-vi.mock("./useFreeAgentQuota", () => ({
-  useFreeAgentQuota: () => ({
-    isQuotaExceeded: mocks.isQuotaExceeded,
-    isLoading: mocks.isQuotaLoading,
-  }),
-}));
-
 function makeSettings(overrides: Partial<UserSettings> = {}): UserSettings {
   return {
     selectedModel: { provider: "openrouter", name: "test-model" },

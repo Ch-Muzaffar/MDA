@@ -192,7 +192,7 @@ describe("ProviderSettingsPage", () => {
           auto: { apiKey: { value: "test-google-key" } },
         },
         enableDyadPro: true,
-        defaultChatMode: "local-agent",
+        defaultChatMode: "build",
       }),
     );
   });

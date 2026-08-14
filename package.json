@@ -1,16 +1,15 @@
 {
-  "name": "dyad",
+  "name": "mda-ai",
   "version": "1.10.0",
-  "description": "Free, local, open-source AI app builder",
+  "description": "MDA AI - Free, local, open-source AI app builder",
   "keywords": [],
   "license": "MIT",
   "author": {
-    "name": "Will Chen",
-    "email": "willchen90@gmail.com"
+    "name": "MDA AI"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dyad-sh/dyad.git"
+    "url": "https://github.com/mda-ai/mda-ai.git"
   },
   "main": ".vite/build/main.js",
   "scripts": {
@@ -218,5 +217,5 @@
   "engines": {
     "node": ">=24 <26"
   },
-  "productName": "dyad"
+  "productName": "MDA AI"
 }

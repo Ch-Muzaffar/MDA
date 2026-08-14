@@ -2,12 +2,6 @@ import { useCallback, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ipc } from "@/ipc/types";
 import { type UserSettings, hasDyadProKey } from "@/lib/schemas";
-import {
-  getInitialLoadTelemetryProperties,
-  getSettingsPersonTelemetryProperties,
-} from "@/lib/posthogTelemetry";
-import { usePostHog } from "posthog-js/react";
-import { useAppVersion } from "./useAppVersion";
 import { queryKeys } from "@/lib/queryKeys";
 
 const TELEMETRY_CONSENT_KEY = "dyadTelemetryConsent";
@@ -28,9 +22,9 @@ export function isDyadProUser(): boolean {
 
 let initialLoadTelemetryState: "idle" | "sent" = "idle";
 
+
+
 export function useSettings() {
-  const posthog = usePostHog();
-  const appVersion = useAppVersion();
   const queryClient = useQueryClient();
 
   const settingsQuery = useQuery({
@@ -43,73 +37,12 @@ export function useSettings() {
     queryFn: () => ipc.misc.getEnvVars(),
   });
 
-  const {
-    data: platform,
-    error: platformError,
-    isLoading: isPlatformLoading,
-  } = useQuery({
-    queryKey: queryKeys.system.platform,
-    queryFn: () => ipc.system.getSystemPlatform(),
-    staleTime: Infinity,
-  });
-
-  const {
-    data: initialLoadTelemetryContext,
-    isLoading: isInitialLoadTelemetryContextLoading,
-  } = useQuery({
-    queryKey: queryKeys.system.initialLoadTelemetryContext,
-    queryFn: () => ipc.system.getInitialLoadTelemetryContext(),
-    staleTime: Infinity,
-  });
-
   useEffect(() => {
     if (!settingsQuery.data) {
       return;
     }
-
     processSettingsForTelemetry(settingsQuery.data);
-    posthog?.people?.set(
-      getSettingsPersonTelemetryProperties(settingsQuery.data),
-    );
-
-    if (
-      initialLoadTelemetryState !== "idle" ||
-      !appVersion ||
-      !posthog ||
-      isPlatformLoading ||
-      isInitialLoadTelemetryContextLoading ||
-      !initialLoadTelemetryContext
-    ) {
-      return;
-    }
-
-    if (platformError) {
-      console.warn(
-        "Failed to get system platform for telemetry",
-        platformError,
-      );
-    }
-
-    posthog.capture(
-      "app:initial-load",
-      getInitialLoadTelemetryProperties({
-        settings: settingsQuery.data,
-        appVersion,
-        platform: platform ?? null,
-        isFirstSession: initialLoadTelemetryContext.isFirstSession,
-      }),
-    );
-    initialLoadTelemetryState = "sent";
-  }, [
-    settingsQuery.data,
-    appVersion,
-    posthog,
-    isPlatformLoading,
-    isInitialLoadTelemetryContextLoading,
-    platform,
-    platformError,
-    initialLoadTelemetryContext,
-  ]);
+  }, [settingsQuery.data]);
 
   const updateSettingsMutation = useMutation({
     mutationFn: async (newSettings: Partial<UserSettings>) => {
@@ -118,9 +51,6 @@ export function useSettings() {
     onSuccess: (updatedSettings) => {
       queryClient.setQueryData(queryKeys.settings.user, updatedSettings);
       processSettingsForTelemetry(updatedSettings);
-      posthog?.people?.set(
-        getSettingsPersonTelemetryProperties(updatedSettings),
-      );
     },
     meta: { showErrorToast: true },
   });

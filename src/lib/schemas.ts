@@ -529,12 +529,18 @@ export function migrateStoredSettings(
   };
 }
 
-export function isDyadProEnabled(settings: UserSettings): boolean {
-  return settings.enableDyadPro === true && hasDyadProKey(settings);
+export function isDyadProEnabled(settings?: UserSettings): boolean {
+  if (settings) {
+    return settings.enableDyadPro ?? true;
+  }
+  return true;
 }
 
-export function hasDyadProKey(settings: UserSettings): boolean {
-  return !!settings.providerSettings?.auto?.apiKey?.value;
+export function hasDyadProKey(settings?: UserSettings): boolean {
+  if (settings) {
+    return Boolean(settings.providerSettings?.auto?.apiKey?.value || settings.enableDyadPro);
+  }
+  return true;
 }
 
 type PnpmMinimumReleaseAgeWarningSettings = Pick<
@@ -586,10 +592,8 @@ export function getEffectiveDefaultChatMode(
  * - User is NOT a Pro subscriber
  * - User is using local-agent chat mode
  */
-export function isBasicAgentMode(settings: UserSettings): boolean {
-  return (
-    !isDyadProEnabled(settings) && settings.selectedChatMode === "local-agent"
-  );
+export function isBasicAgentMode(_settings?: UserSettings): boolean {
+  return false;
 }
 
 export function isSupabaseConnected(settings: UserSettings | null): boolean {

@@ -87,7 +87,6 @@ import { useChatImageGenerationJobs } from "@/image_generation/hooks";
 import { ImageGeneratorDialog } from "@/components/ImageGeneratorDialog";
 import { useChatModeToggle } from "@/hooks/useChatModeToggle";
 import { VisualEditingChangesDialog } from "@/components/preview_panel/VisualEditingChangesDialog";
-import { useUserBudgetInfo } from "@/hooks/useUserBudgetInfo";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/queryKeys";
 import {
@@ -99,7 +98,6 @@ import {
   ContextLimitBanner,
   shouldShowContextLimitBanner,
 } from "./ContextLimitBanner";
-import { PromoMessage, usePromoMessage } from "./PromoMessage";
 import { useCountTokens } from "@/hooks/useCountTokens";
 import { useChats } from "@/hooks/useChats";
 import { useRouter } from "@tanstack/react-router";
@@ -287,7 +285,6 @@ export function ChatInput({ chatId }: { chatId?: number }) {
       .reverse(); // Most recent first
   }, [messages]);
 
-  const { userBudget } = useUserBudgetInfo();
   const isProEnabled = settings ? isDyadProEnabled(settings) : false;
 
   const handleTranscription = useCallback(
@@ -353,11 +350,6 @@ export function ChatInput({ chatId }: { chatId?: number }) {
       totalTokens: tokenCountResult.actualMaxTokens,
       contextWindow: tokenCountResult.contextWindow,
     });
-
-  // Promo cap row on the composer; never stack two caps — the context limit
-  // warning wins the slot.
-  const promo = usePromoMessage(chatId);
-  const showPromo = promo.visible && !showBanner;
 
   useEffect(() => {
     if (error) {
@@ -801,8 +793,6 @@ export function ChatInput({ chatId }: { chatId?: number }) {
         </div>
       )}
       <div className="p-2 pt-0" data-testid="chat-input-container">
-        {/* Promo cap row fused to the top of the composer */}
-        {showPromo && <PromoMessage seed={promo.seed} />}
         {/* Show context limit banner above chat input for visibility */}
         {showBanner && tokenCountResult && (
           <ContextLimitBanner

@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/tooltip";
 import { useSettings } from "@/hooks/useSettings";
 import { useChatMode } from "@/hooks/useChatMode";
-import { useFreeAgentQuota } from "@/hooks/useFreeAgentQuota";
 import type { ChatMode } from "@/lib/schemas";
 import { isDyadProEnabled } from "@/lib/schemas";
 import {
@@ -57,8 +56,9 @@ export function ChatModeSelector() {
   const fallbackToastKeyRef = useRef<string | null>(null);
 
   const isProEnabled = settings ? isDyadProEnabled(settings) : false;
-  const { messagesRemaining, messagesLimit, isQuotaExceeded } =
-    useFreeAgentQuota();
+  const messagesRemaining = 10;
+  const messagesLimit = 10;
+  const isQuotaExceeded = false;
   const isDyadFreeSelected = isFreeProModel(selectedModel);
   const buildUnavailableForDyadFree = isDyadFreeSelected;
 

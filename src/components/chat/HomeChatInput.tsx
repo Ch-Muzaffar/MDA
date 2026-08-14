@@ -33,7 +33,6 @@ import { cn } from "@/lib/utils";
 import { useLoadApps } from "@/hooks/useLoadApps";
 import { AppSearchDialog } from "../AppSearchDialog";
 import { useVoiceToText } from "@/hooks/useVoiceToText";
-import { useUserBudgetInfo } from "@/hooks/useUserBudgetInfo";
 import { showError } from "@/lib/toast";
 import { ipc } from "@/ipc/types";
 
@@ -51,8 +50,7 @@ export function HomeChatInput({
     hasChatId: false,
   }); // eslint-disable-line @typescript-eslint/no-unused-vars
   useChatModeToggle();
-  const { userBudget } = useUserBudgetInfo();
-  const isProEnabled = !!userBudget && !!settings?.enableDyadPro;
+  const isProEnabled = true;
 
   const handleTranscription = useCallback(
     (text: string) => {

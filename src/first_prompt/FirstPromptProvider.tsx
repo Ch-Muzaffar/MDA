@@ -24,7 +24,6 @@ import { useSelectChat } from "@/hooks/useSelectChat";
 import { useLanguageModelProviders } from "@/hooks/useLanguageModelProviders";
 import { useOpenPreviewIfSetupRequired } from "@/hooks/useOpenPreviewIfSetupRequired";
 import { queryKeys } from "@/lib/queryKeys";
-import { useFreeAgentQuota } from "@/hooks/useFreeAgentQuota";
 import { showError } from "@/lib/toast";
 import {
   attachmentsAtom,
@@ -100,7 +99,6 @@ export function FirstPromptProvider({
   const { t } = useTranslation("home");
   const posthog = usePostHog();
   const { settings, envVars } = useSettings();
-  const { quotaStatus } = useFreeAgentQuota();
   const { refreshApps } = useLoadApps();
   const { selectChat } = useSelectChat();
   const openPreviewIfSetupRequired = useOpenPreviewIfSetupRequired();
@@ -235,9 +233,8 @@ export function FirstPromptProvider({
   const providerResumeInputsRef = useRef({
     settings,
     envVars,
-    quotaStatus,
   });
-  providerResumeInputsRef.current = { settings, envVars, quotaStatus };
+  providerResumeInputsRef.current = { settings, envVars };
   const providerResumeAttemptRef = useRef<object | null>(null);
   const resumeAfterProviderConfigured = useCallback(
     (settingsOverride?: UserSettings) => {

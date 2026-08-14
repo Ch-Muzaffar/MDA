@@ -1,4 +1,4 @@
-# Why Dyad uses state machines
+# Why MDA AI uses state machines
 
 For a long time, this comment sat in our chat streaming code:
 
@@ -92,7 +92,7 @@ this workflow?" is answered by reading several booleans and hoping they
 agree. With a machine there is one value, and it's always one of the named
 states.
 
-In Dyad, a machine is a plain TypeScript function. No library:
+In MDA AI, a machine is a plain TypeScript function. No library:
 
 ```ts
 function transition(

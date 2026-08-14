@@ -35,9 +35,7 @@ import { type SessionDebugBundle, type SystemDebugInfo } from "@/ipc/types";
 import { showError } from "@/lib/toast";
 import { useTranslation } from "react-i18next";
 import { HelpBotDialog } from "./HelpBotDialog";
-import { useSettings } from "@/hooks/useSettings";
 import { BugScreenshotDialog } from "./BugScreenshotDialog";
-import { useUserBudgetInfo } from "@/hooks/useUserBudgetInfo";
 import { type ModelSelection, type UserSettings } from "@/lib/schemas";
 import { type UserBudgetInfo } from "@/ipc/types/system";
 import { motion, AnimatePresence } from "framer-motion";
@@ -88,7 +86,7 @@ function formatSettingsLines(
     `- Selected Model: ${model.provider}:${model.name}`,
     `- Chat Mode: ${settings.selectedChatMode ?? "default"}`,
     `- Auto Approve Changes: ${settings.autoApproveChanges ?? "n/a"}`,
-    `- Dyad Pro Enabled: ${settings.enableDyadPro ?? "n/a"}`,
+    `- Pro Mode Enabled: ${settings.enableDyadPro ?? "n/a"}`,
     `- Effort Level: ${selectedModel?.effortLevel ?? "medium"}`,
     `- Runtime Mode: ${settings.runtimeMode2 ?? "n/a"}`,
     `- Release Channel: ${settings.releaseChannel ?? "n/a"}`,
@@ -299,7 +297,7 @@ export function HelpDialog() {
           ],
       }))
     : null;
-  const { userBudget } = useUserBudgetInfo();
+  const userBudget = undefined;
   const isDyadProUser = settings?.providerSettings?.["auto"]?.apiKey?.value;
 
   // ---------------------------------------------------------------------------
@@ -569,7 +567,7 @@ ${formatLogsSection(debugInfo)}
             <div className="flex items-center gap-2">
               <MessageSquareIcon className="h-4 w-4 text-primary" />
               <span className="text-sm font-semibold">
-                AI / Dyad Pro issues
+                AI model / prompt issues
               </span>
             </div>
             <p className="text-sm text-muted-foreground">

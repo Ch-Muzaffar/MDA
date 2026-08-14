@@ -98,60 +98,15 @@ const queryClient = new QueryClient({
   }),
 });
 
-const posthogClient = posthog.init(
-  "phc_5Vxx0XT8Ug3eWROhP6mm4D6D2DgIIKT232q4AKxC2ab",
-  {
-    api_host: "https://us.i.posthog.com",
-    // @ts-ignore
-    debug: import.meta.env.MODE === "development",
-    autocapture: false,
-    capture_exceptions: true,
-    capture_pageview: false,
-    before_send: (event) => {
-      if (!isTelemetryOptedIn()) {
-        console.debug("Telemetry not opted in, skipping event");
-        return null;
-      }
-
-      if (shouldFilterPostHogExceptionEvent(event)) {
-        console.debug(
-          "Filtering generic fetch failed exception from telemetry",
-        );
-        return null;
-      }
-      const telemetryUserId = getTelemetryUserId();
-      if (telemetryUserId) {
-        posthogClient.identify(telemetryUserId);
-      }
-
-      if (event?.properties["$ip"]) {
-        event.properties["$ip"] = null;
-      }
-
-      // For non-Pro users, only send 10% of events (but always send errors,
-      // app:initial-load, promo_click, and sandbox.script.* — see
-      // shouldBypassNonProTelemetrySampling).
-      if (!isDyadProUser()) {
-        if (
-          !shouldBypassNonProTelemetrySampling(event) &&
-          Math.random() > 0.1
-        ) {
-          console.debug("Non-Pro user: sampling out event", event?.event);
-          return null;
-        }
-      }
-
-      console.debug(
-        "Telemetry opted in - UUID:",
-        telemetryUserId,
-        "sending event",
-        event,
-      );
-      return event;
-    },
-    persistence: "localStorage",
-  },
-);
+const posthogClient = posthog.init("", {
+  api_host: "disabled",
+  autocapture: false,
+  capture_exceptions: false,
+  capture_pageview: false,
+  disable_session_recording: true,
+  disabled: true,
+  before_send: () => null,
+});
 
 function App() {
   return (

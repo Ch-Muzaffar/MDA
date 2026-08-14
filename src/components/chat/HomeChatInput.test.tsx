@@ -31,9 +31,6 @@ vi.mock("@/hooks/useStreamChat", () => ({
 vi.mock("@/hooks/useChatModeToggle", () => ({
   useChatModeToggle: () => undefined,
 }));
-vi.mock("@/hooks/useUserBudgetInfo", () => ({
-  useUserBudgetInfo: () => ({ userBudget: { budget: 1 } }),
-}));
 vi.mock("@/hooks/useTypingPlaceholder", () => ({
   useTypingPlaceholder: () => "something",
 }));

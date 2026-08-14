@@ -1,5 +1,4 @@
 import { useSettings } from "@/hooks/useSettings";
-import { useFreeAgentQuota } from "@/hooks/useFreeAgentQuota";
 import { SettingField } from "@/components/settings/SettingField";
 import {
   Select,
@@ -20,7 +19,6 @@ import {
 
 export function DefaultChatModeSelector() {
   const { settings, updateSettings, envVars } = useSettings();
-  const { quotaStatus } = useFreeAgentQuota();
   const { t } = useTranslation("settings");
 
   useEffect(() => {
@@ -41,9 +39,7 @@ export function DefaultChatModeSelector() {
 
   const isProEnabled = isDyadProEnabled(settings);
   const isDyadFreeSelected = isFreeProModel(settings.selectedModel);
-  const freeAgentQuotaAvailable = quotaStatus
-    ? !quotaStatus.isQuotaExceeded
-    : undefined;
+  const freeAgentQuotaAvailable = true;
   const effectiveDefault = getEffectiveDefaultChatMode(
     settings,
     envVars,

@@ -21,8 +21,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useLoadApps } from "@/hooks/useLoadApps";
 import { useGenerateImage } from "@/hooks/useGenerateImage";
-import { useUserBudgetInfo } from "@/hooks/useUserBudgetInfo";
-import { AiAccessBanner } from "./ProBanner";
 import { AppSearchSelect } from "./AppSearchSelect";
 import type { ImageThemeMode } from "@/ipc/types";
 
@@ -77,8 +75,8 @@ export function ImageGeneratorDialog({
 
   const { apps } = useLoadApps();
   const { start } = useGenerateImage();
-  const { userBudget, isLoadingUserBudget: isBudgetLoading } =
-    useUserBudgetInfo();
+  const userBudget = { budget: 1 };
+  const isBudgetLoading = false;
 
   // Sync defaultAppId only when dialog opens (not while already open)
   useEffect(() => {

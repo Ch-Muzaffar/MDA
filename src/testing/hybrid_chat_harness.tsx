@@ -88,7 +88,6 @@ import { ChatPanel } from "@/components/ChatPanel";
 import { AppList } from "@/components/AppList";
 import { ChatList } from "@/components/ChatList";
 import { PrivacyBanner } from "@/components/TelemetryBanner";
-import { SubscriptionStatusBanner } from "@/components/SubscriptionStatusBanner";
 import { VersionPreviewProvider } from "@/version_preview/VersionPreviewProvider";
 import { PreviewIframeProvider } from "@/preview_iframe/PreviewIframeProvider";
 import { PreviewIframeManager } from "@/preview_iframe/manager";
@@ -260,8 +259,6 @@ export interface MountOptions {
   withChatList?: boolean;
   /** Render the real telemetry privacy banner next to the mounted route. */
   withPrivacyBanner?: boolean;
-  /** Render the real global subscription status banner. */
-  withSubscriptionStatusBanner?: boolean;
 }
 
 export interface MountSurfaceOptions extends MountOptions {
@@ -770,9 +767,6 @@ export async function setupHybridChatHarness(
               {opts.withAppList && <AppList show />}
               {opts.withChatList && <ChatList show />}
               {opts.withPrivacyBanner && <PrivacyBanner />}
-              {opts.withSubscriptionStatusBanner && (
-                <SubscriptionStatusBanner />
-              )}
               <Outlet />
             </div>
           </PlanHandoffProvider>

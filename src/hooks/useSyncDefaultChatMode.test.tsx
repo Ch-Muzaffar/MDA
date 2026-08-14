@@ -25,10 +25,6 @@ vi.mock("./useSettings", () => ({
   }),
 }));
 
-vi.mock("./useFreeAgentQuota", () => ({
-  useFreeAgentQuota: () => ({ quotaStatus: mocks.quotaStatus }),
-}));
-
 vi.mock("./useLanguageModelProviders", () => ({
   useLanguageModelProviders: () => ({
     isAnyProviderSetup: () => mocks.isAnyProviderSetup,
@@ -116,14 +112,6 @@ describe("useSyncDefaultChatMode", () => {
       ),
     );
     warnSpy.mockRestore();
-  });
-
-  it("does not persist Agent while quota is unresolved", () => {
-    mocks.quotaStatus = undefined;
-
-    renderHook(() => useSyncDefaultChatMode(), { wrapper: makeWrapper() });
-
-    expect(mocks.updateSettings).not.toHaveBeenCalled();
   });
 
   it("does not persist Agent before provider setup", () => {

@@ -23,43 +23,26 @@ function convertApiTemplate(apiTemplate: ApiTemplate): Template {
   };
 }
 
-// Fetch templates from API with caching
+import localApiTemplatesData from "@/assets/templates.json";
+
+// Fetch templates from local file with caching
 export async function fetchApiTemplates(): Promise<Template[]> {
   // Return cached data if available
   if (apiTemplatesCache) {
     return apiTemplatesCache;
   }
 
-  // Return existing promise if fetch is already in progress
-  if (apiTemplatesFetchPromise) {
-    return apiTemplatesFetchPromise;
+  try {
+    const apiTemplates: ApiTemplate[] = localApiTemplatesData as ApiTemplate[];
+    const convertedTemplates = apiTemplates.map(convertApiTemplate);
+
+    // Cache the result
+    apiTemplatesCache = convertedTemplates;
+    return convertedTemplates;
+  } catch (error) {
+    logger.error("Failed to load local templates:", error);
+    return [];
   }
-
-  // Start new fetch
-  apiTemplatesFetchPromise = (async (): Promise<Template[]> => {
-    try {
-      const response = await fetch("https://api.dyad.sh/v1/templates");
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch templates: ${response.status} ${response.statusText}`,
-        );
-      }
-
-      const apiTemplates: ApiTemplate[] = await response.json();
-      const convertedTemplates = apiTemplates.map(convertApiTemplate);
-
-      // Cache the result
-      apiTemplatesCache = convertedTemplates;
-      return convertedTemplates;
-    } catch (error) {
-      logger.error("Failed to fetch API templates:", error);
-      // Reset the promise so we can retry later
-      apiTemplatesFetchPromise = null;
-      return []; // Return empty array on error
-    }
-  })();
-
-  return apiTemplatesFetchPromise;
 }
 
 // Get all templates (local + API)

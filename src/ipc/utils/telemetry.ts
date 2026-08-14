@@ -17,57 +17,20 @@ const FILTERED_EXCEPTION_MESSAGES = new Set([
  * where PostHog can capture it.
  */
 export function sendTelemetryEvent(
-  eventName: string,
-  properties?: Record<string, unknown>,
-): void {
-  try {
-    const windows = BrowserWindow.getAllWindows();
-    if (windows.length > 0) {
-      sendTelemetryEventToWindow(windows[0], eventName, properties);
-    }
-  } catch (error) {
-    logger.warn("Error sending telemetry event:", error);
-  }
-}
+  _eventName: string,
+  _properties?: Record<string, unknown>,
+): void {}
 
 export function sendTelemetryEventToWindow(
-  target: BrowserWindow,
-  eventName: string,
-  properties?: Record<string, unknown>,
-): void {
-  try {
-    target.webContents.send("telemetry:event", {
-      eventName,
-      properties,
-    } satisfies TelemetryEventPayload);
-  } catch (error) {
-    logger.warn("Error sending telemetry event:", error);
-  }
-}
+  _target: BrowserWindow,
+  _eventName: string,
+  _properties?: Record<string, unknown>,
+): void {}
 
-/**
- * Sends an exception from the main process to the renderer as a PostHog $exception event.
- */
 export function sendTelemetryException(
-  error: unknown,
-  context?: Record<string, unknown>,
-): void {
-  const err =
-    error instanceof Error
-      ? error
-      : new Error(String(error ?? "Unknown error"));
-
-  if (shouldFilterTelemetryException(err)) {
-    return;
-  }
-
-  sendTelemetryEvent("$exception", {
-    exception_name: err.name,
-    exception_message: err.message,
-    exception_stack_trace: err.stack,
-    ...context,
-  });
-}
+  _error: unknown,
+  _context?: Record<string, unknown>,
+): void {}
 
 export function shouldFilterTelemetryException(error: unknown): boolean {
   if (error instanceof DyadError) {

@@ -14,7 +14,6 @@ import { DyadProSuccessDialog } from "@/components/DyadProSuccessDialog";
 import { useTheme } from "@/contexts/ThemeContext";
 import { ipc } from "@/ipc/types";
 import { useSystemPlatform } from "@/hooks/useSystemPlatform";
-import { useUserBudgetInfo } from "@/hooks/useUserBudgetInfo";
 import type { UserBudgetInfo } from "@/ipc/types";
 import {
   Tooltip,
@@ -121,14 +120,13 @@ export const TitleBar = () => {
                 />
               }
             >
-              <img src={logo} alt="Dyad" className="w-5 h-5 shrink-0" />
+              <img src={logo} alt="MDA AI" className="w-5 h-5 shrink-0" />
               <span className="hidden @2xl:inline max-w-40 truncate">
                 Manage app
               </span>
             </TooltipTrigger>
             <TooltipContent>{displayText}</TooltipContent>
           </Tooltip>
-          {isDyadPro && <DyadProButton isDyadProEnabled={isDyadProEnabled} />}
         </div>
 
         <div className="flex-1 min-w-0 overflow-hidden self-end">
@@ -137,11 +135,6 @@ export const TitleBar = () => {
 
         {showWindowControls && <WindowsControls />}
       </div>
-
-      <DyadProSuccessDialog
-        isOpen={isSuccessDialogOpen}
-        onClose={() => setIsSuccessDialogOpen(false)}
-      />
     </>
   );
 };
@@ -232,7 +225,7 @@ export function DyadProButton({
   isDyadProEnabled: boolean;
 }) {
   const { navigate } = useRouter();
-  const { userBudget } = useUserBudgetInfo();
+  const userBudget = null;
   return (
     <Button
       data-testid="title-bar-dyad-pro-button"
